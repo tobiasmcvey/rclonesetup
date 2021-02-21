@@ -71,6 +71,9 @@ Here's an example shell script to silently mount a drive as a daemon:
 # run rclone as a daemon to silently mount drives without launching terminal on login
 rclone mount --daemon remotename:path localpath
 ```
+
+Make the script executable with `chmod +x script.sh`
+
 Here's a template for launching a shell script with launchd on login:
 
 ```xml

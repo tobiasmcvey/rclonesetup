@@ -1,5 +1,9 @@
 # **Rclone setup**
 
+Rclone is a tool for mounting remote drives. It allows us to move files and make backups with schedules and specific rules on which folders to sync.
+
+Read more at [rclone.org](https://rclone.org/)
+
 - [**Rclone setup**](#rclone-setup)
   - [**Setup on Mac**](#setup-on-mac)
     - [**Install OSXFuse**](#install-osxfuse)

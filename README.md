@@ -56,6 +56,8 @@ rclone mount remote:path /path/to/mountpoint [flags]
 
 I couldn't make cron load this on boot on a Mac, but launchd works. Here's how to set it up to launch silently on user login.
 
+Check out [launchd.info](https://launchd.info/) for an introduction.
+
 I chose to make a shell script also so I can easily add and remove drives.
 
 Create a `plist` file for the launchd job, then add it with `launchctl`. 

@@ -5,22 +5,25 @@ Rclone is a tool for mounting remote drives. It allows us to move files and make
 Read more at [rclone.org](https://rclone.org/)
 
 - [**Rclone setup**](#rclone-setup)
-  - [**Setup on Mac**](#setup-on-mac)
-    - [**Install OSXFuse**](#install-osxfuse)
-    - [**Install Rclone**](#install-rclone)
-    - [**Optional: Get private credentials**](#optional-get-private-credentials)
-    - [**Configure remote**](#configure-remote)
-    - [**Mount remote manually**](#mount-remote-manually)
-    - [**Mount remote on boot**](#mount-remote-on-boot)
-    - [**How to unmount remotes**](#how-to-unmount-remotes)
+	- [**Mac OSX Prerequisite: Install OSXFuse**](#mac-osx-prerequisite-install-osxfuse)
+	- [**Install Rclone**](#install-rclone)
+	- [**Optional: Get private credentials**](#optional-get-private-credentials)
+	- [**Configure remote**](#configure-remote)
+	- [**Mount remote manually**](#mount-remote-manually)
+	- [**Mount remote on boot**](#mount-remote-on-boot)
+		- [**On Linux**](#on-linux)
+		- [**On Mac OSX**](#on-mac-osx)
+	- [**How to unmount remotes**](#how-to-unmount-remotes)
+		- [**On Linux**](#on-linux-1)
+		- [**On Mac OSX**](#on-mac-osx-1)
 
-## **Setup on Mac**
+## **Mac OSX Prerequisite: Install OSXFuse**
 
-### **Install OSXFuse**
+Only required for setup on Mac.
 
 Get OSXFuse at [osxfuse.github.io](https://osxfuse.github.io/)
 
-### **Install Rclone**
+## **Install Rclone**
 
 Check latest install instructions at [rclone.org](https://rclone.org/downloads/)
 
@@ -28,14 +31,14 @@ Check latest install instructions at [rclone.org](https://rclone.org/downloads/)
 curl https://rclone.org/install.sh | sudo bash
 ```
 
-### **Optional: Get private credentials**
+## **Optional: Get private credentials**
 
 You can use your own credentials if you don't want to be rate limited. These credentials need to be stored locally for rclone to read. Otherwise you will use the shared credentials at the official rclone project.
 
 For Google drive, follow [this guide](https://rclone.org/drive/#service-account-support)
 For Microsoft onedrive, follow [this guide](https://rclone.org/onedrive/#getting-your-own-client-id-and-key)
 
-### **Configure remote**
+## **Configure remote**
 
 We use the same command to create a new remote, edit existing remotes and remove them.
 
@@ -43,16 +46,35 @@ We use the same command to create a new remote, edit existing remotes and remove
 rclone config
 ```
 
-### **Mount remote manually**
+Verify you have access to your drive. 
+
+**Verifying access to Google Drive**
+
+```bash
+rclone -v --drive-impersonate foo@example.com lsf gdrive:backup
+```
+
+## **Mount remote manually**
 
 Mounting a drive is quite straightforward. Please read up on the flags.
 
 ```bash
 rclone mount remote:path /path/to/mountpoint [flags]
 # example: mount local folder gdrive to remote private_drive
-# rclone mount private_gdrive:/ gdrive
+# rclone mount private_gdrive: gdrive
 ```
-### **Mount remote on boot**
+## **Mount remote on boot**
+
+### **On Linux**
+
+I used cron to mount the remote drives on boot but you can also use systemd.
+
+```bash
+# restart rclone mount for google drive on reboot
+@reboot /home/toby/projects/rclonesetup/mountrclone.sh
+```
+
+### **On Mac OSX**
 
 I couldn't make cron load this on boot on a Mac, but launchd works. Here's how to set it up to launch silently on user login.
 
@@ -121,7 +143,17 @@ If there's a problem with the job then there should be an error command when att
 
 Try to reboot, login and check if the drive was mounted.
 
-### **How to unmount remotes**
+## **How to unmount remotes**
+
+### **On Linux**
+
+```bash
+sudo umount <device|directory>
+# for example, to unmount /dev/sdc1
+# sudo umount /dev/sdc1
+```
+
+### **On Mac OSX**
 
 Use OSXFuse to unmount drives. 
 
@@ -130,4 +162,3 @@ umount drivename
 # example: unmount drive called gdrive
 #  umount gdrive
 ```
-

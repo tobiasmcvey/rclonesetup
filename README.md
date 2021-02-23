@@ -71,7 +71,7 @@ I used cron to mount the remote drives on boot but you can also use systemd.
 
 ```bash
 # restart rclone mount for google drive on reboot
-@reboot /home/toby/projects/rclonesetup/mountrclone.sh
+@reboot /home/username/projects/rclonesetup/mountrclone.sh
 ```
 
 ### **On Mac OSX**
